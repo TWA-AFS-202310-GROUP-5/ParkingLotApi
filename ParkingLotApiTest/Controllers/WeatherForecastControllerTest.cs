@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Testing;
 using ParkingLotApi.Dtos;
+using ParkingLotApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,20 @@ namespace ParkingLotApiTest.Controllers
 
             var response = await client.PostAsJsonAsync("/parkinglots", invalidCapcityParkingLot);
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task Should_return_201_created_parkinglot_when_create_parking_lot_given_capacity_valid()
+        {
+            HttpClient client = GetClient();
+            ParkingLotDto parkingLot = new ParkingLotDto("Parking lot1", 19, "Chuangxin Building");
+
+            var response = await client.PostAsJsonAsync("/parkinglots", parkingLot);
+            var receivedParkingLot = await response.Content.ReadFromJsonAsync<ParkingLot>();
+
+            Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+            Assert.Equal(parkingLot.Name, receivedParkingLot.Name);
+            
         }
     }
 }
