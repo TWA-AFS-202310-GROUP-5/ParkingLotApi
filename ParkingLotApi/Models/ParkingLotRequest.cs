@@ -1,4 +1,4 @@
-﻿namespace ParkingLotApi.Dtos
+﻿namespace ParkingLotApi.Models
 {
     public class ParkingLotRequest
     {

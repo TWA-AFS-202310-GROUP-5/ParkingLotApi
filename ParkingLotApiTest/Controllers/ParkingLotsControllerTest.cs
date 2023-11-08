@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
-using ParkingLotApi.Dtos;
+using ParkingLotApi.Models;
 using System.Net;
 using System.Net.Http.Json;
 

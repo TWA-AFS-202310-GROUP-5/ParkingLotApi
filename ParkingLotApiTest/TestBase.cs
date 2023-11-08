@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
+using ParkingLotApi.Services;
 
 namespace ParkingLotApiTest
 {
@@ -6,7 +7,7 @@ namespace ParkingLotApiTest
     {
         public TestBase(WebApplicationFactory<Program> factory)
         {
-            this.Factory = factory;
+            Factory = factory;
         }
 
         public WebApplicationFactory<Program> Factory { get; }
