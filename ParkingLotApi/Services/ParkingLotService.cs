@@ -7,6 +7,7 @@ namespace ParkingLotApi.Services
 {
     public class ParkingLotService
     {
+        private static int MIN_CAPACITY = 10;
         public ParkingLotService(IParkingLotRepository repository)
         {
             this._parkingLotRepository = repository;
@@ -16,7 +17,7 @@ namespace ParkingLotApi.Services
 
         public async Task<ParkingLot> AddAsync(ParkingLotDto parkingLotDto)
         {
-            if (parkingLotDto.Capacity < 10)
+            if (parkingLotDto.Capacity < MIN_CAPACITY)
             {
                 throw new InvalidCapacityException();
             }
@@ -52,9 +53,20 @@ namespace ParkingLotApi.Services
             return await _parkingLotRepository.GetParkingLotById(id);
         }
 
-        internal Task<object?> UpdateParkingLot(ParkingLot parkingLot)
+        public async Task<ParkingLot> UpdateParkingLotCapacity(ParkingLot parkingLot)
         {
-            throw new NotImplementedException();
+            if(parkingLot.Capacity < MIN_CAPACITY)
+            {
+                throw new InvalidCapacityException();
+            }
+            if (await _parkingLotRepository.GetParkingLotById(parkingLot.Id) != null)
+            {
+                return await _parkingLotRepository.UpdateParkingLotCapacity(parkingLot);
+            }
+            else
+            {
+                throw new IDNotExistException();
+            }
         }
     }
 }

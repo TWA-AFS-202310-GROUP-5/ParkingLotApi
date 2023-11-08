@@ -2,6 +2,8 @@
 using MongoDB.Driver;
 using ParkingLotApi.Dtos;
 using ParkingLotApi.Models;
+using System.Diagnostics.Metrics;
+
 namespace ParkingLotApi.Repositories
 {
     public class ParkingLotRepository : IParkingLotRepository
@@ -37,9 +39,14 @@ namespace ParkingLotApi.Repositories
             return await _parkingLotCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task<ParkingLot> UpdateParkingLotById(ParkingLot parkingLot)
+        public async Task<ParkingLot> UpdateParkingLotCapacity(ParkingLot parkingLot)
         {
-            var update = Builders<ParkingLot>.Update.Set(e => e.Name, parkingLot.Name);
+            var update = Builders<ParkingLot>.Update.Set(e => e.Capacity, parkingLot.Capacity);
+            var options = new FindOneAndUpdateOptions<ParkingLot>()
+            {
+                IsUpsert = false,
+                ReturnDocument = ReturnDocument.After
+            };
             return await _parkingLotCollection.FindOneAndUpdateAsync(a => a.Id == parkingLot.Id, update);
         }
         public async Task<List<ParkingLot>> GetAllParkingLots()

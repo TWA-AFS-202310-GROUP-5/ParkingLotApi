@@ -40,7 +40,7 @@ namespace ParkingLotApi.Controllers
         [HttpPut]
         public async Task<ActionResult<ParkingLot>> UpdateParkingLotAsync(ParkingLot parkingLot)
         {
-            return Ok(await _parkingLotService.UpdateParkingLot(parkingLot));
+            return Ok(await _parkingLotService.UpdateParkingLotCapacity(parkingLot));
         }
     }
 }
