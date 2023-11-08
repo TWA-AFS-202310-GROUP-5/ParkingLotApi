@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using ParkingLotApi.Dtos;
 using ParkingLotApi.Models;
@@ -41,9 +42,14 @@ namespace ParkingLotApi.Repositories
 
         public async Task<ParkingLot> UpdateParkingLotCapacity(ParkingLot parkingLot)
         {
+            var filter = Builders<ParkingLot>.Filter.Where(x => x.Id == parkingLot.Id);
             var update = Builders<ParkingLot>.Update.Set(e => e.Capacity, parkingLot.Capacity);
-            await _parkingLotCollection.FindOneAndUpdateAsync(a => a.Id == parkingLot.Id, update);
-            return await GetParkingLotById(parkingLot.Id);
+            var options = new FindOneAndUpdateOptions<ParkingLot, ParkingLot>
+            {
+                IsUpsert = true,
+                ReturnDocument = ReturnDocument.After
+            };
+            return await _parkingLotCollection.FindOneAndUpdateAsync(filter, update, options);
         }
         public async Task<List<ParkingLot>> GetAllParkingLots()
         {
