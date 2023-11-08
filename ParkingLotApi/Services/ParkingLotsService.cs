@@ -1,20 +1,50 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 using ParkingLotApi.Dtos;
 using ParkingLotApi.Exceptions;
+using ParkingLotApi.Models;
+using ParkingLotApi.Repositories;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ParkingLotApi.Services
 {
     public class ParkingLotsService
     {
-        public async Task<ParkingLotDto> AddAsync(ParkingLotDto parkingLot)
+        private readonly IParkingLotsRepository parkingLotsRepository;
+        public ParkingLotsService(IParkingLotsRepository parkingLotsRepository)
         {
-            if (parkingLot.Capacity < 10 || parkingLot.Location == null)
+            this.parkingLotsRepository = parkingLotsRepository; 
+        }
+
+        public async Task<ParkingLot> AddAsync(ParkingLotDto parkingLotDto)
+        {
+            if (parkingLotDto.Capacity < 10)
             {
                 throw new InvalidCapacityException();
             }
-            return null;
+   
+            return await parkingLotsRepository.CreateParkingLot(parkingLotDto.ToEntity());
         }
 
+        public async Task<ParkingLot?> GetById(string id)
+        {
+            if (!ObjectId.TryParse(id, out _))
+            {
+                throw new InvalidObjectIdException();
+            }
+            var result = await parkingLotsRepository.GetById(id);
+            if (result == null)
+            {
+                throw new NotFoundException();
+            }
+            else
+            {
+                return result;
+            }
+        }
+
+        
 
     }
 }

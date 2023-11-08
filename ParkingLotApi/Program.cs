@@ -1,4 +1,8 @@
+using Microsoft.Extensions.Configuration;
+using MongoDB.Driver;
 using ParkingLotApi.Filters;
+using ParkingLotApi.Models;
+using ParkingLotApi.Repositories;
 using ParkingLotApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +12,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add<InvalidCapacityExceptionFilter>();
+    options.Filters.Add<InvalidObjectIdExceptionFilter>();
+    options.Filters.Add<NotFoundExceptionFilter>();
 });
+builder.Services.AddSingleton<IParkingLotsRepository, ParkingLotsRepository>();
+
+builder.Services.Configure<ParkingLotDatabaseSettings>(
+    builder.Configuration.GetSection("ParkingLotStoreDatabase"));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ParkingLotApi.Dtos;
 using ParkingLotApi.Exceptions;
+using ParkingLotApi.Models;
 using ParkingLotApi.Services;
 
 namespace ParkingLotApi.Controllers
@@ -17,10 +19,18 @@ namespace ParkingLotApi.Controllers
             this._parkingLotsService = parkingLotsService;
         }
 
-        [HttpPost(Name = "to create a new parking lot")]
-        public async Task<ActionResult<ParkingLotDto>> AddParkingLot([FromBody]ParkingLotDto parkingLot)
+        [HttpPost]
+        public async Task<ActionResult<ParkingLot>> AddParkingLot([FromBody] ParkingLotDto parkingLot)
         {
             return StatusCode(StatusCodes.Status201Created, await _parkingLotsService.AddAsync(parkingLot));   
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ParkingLot?>> GetById(string id)
+        {
+            return StatusCode(StatusCodes.Status200OK, await _parkingLotsService.GetById(id));
+        }
+
+        
     }
 }
