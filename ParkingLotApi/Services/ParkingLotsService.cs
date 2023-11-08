@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ParkingLotApi.Dtos;
+using ParkingLotApi.Exceptions;
 
 namespace ParkingLotApi.Services
 {
@@ -9,7 +10,7 @@ namespace ParkingLotApi.Services
         {
             if (parkingLot.Capacity < 10 || parkingLot.Location == null)
             {
-                throw new ArgumentException();
+                throw new InvalidCapacityException();
             }
             return null;
         }
