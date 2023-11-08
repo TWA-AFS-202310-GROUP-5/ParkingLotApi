@@ -21,7 +21,7 @@ namespace ParkingLotApiTest.Controllers
         {
             HttpClient client = GetClient();
             var reponse = await client.GetAsync("/WeatherForecast");
-
+            //add amend
             Assert.Equal(HttpStatusCode.OK, reponse.StatusCode);
         }
     }
