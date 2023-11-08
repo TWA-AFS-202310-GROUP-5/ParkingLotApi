@@ -46,7 +46,7 @@ namespace ParkingLotApi.Repositories
             var update = Builders<ParkingLot>.Update.Set(e => e.Capacity, parkingLot.Capacity);
             var options = new FindOneAndUpdateOptions<ParkingLot, ParkingLot>
             {
-                IsUpsert = true,
+                IsUpsert = false,
                 ReturnDocument = ReturnDocument.After
             };
             return await _parkingLotCollection.FindOneAndUpdateAsync(filter, update, options);
