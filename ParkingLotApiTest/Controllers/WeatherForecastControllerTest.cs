@@ -10,19 +10,18 @@ using System.Threading.Tasks;
 
 namespace ParkingLotApiTest.Controllers
 {
-    public class WeatherForecastControllerTest
+    public class WeatherForecastControllerTest: TestBase
     {
-        private HttpClient _httpClient;
-        public WeatherForecastControllerTest() 
+        public WeatherForecastControllerTest(WebApplicationFactory<Program> factory) : base(factory)
         { 
-            WebApplicationFactory<Program> webApplicationFactory = new WebApplicationFactory<Program>();
-            _httpClient = webApplicationFactory.CreateClient();
         }
 
         [Fact]
         public async Task Should_return_correct_forecast_when_get_weather_forecast()
         {
-            var reponse = await _httpClient.GetAsync("/WeatherForecast");
+            HttpClient client = GetClient();
+            ///
+            var reponse = await client.GetAsync("/WeatherForecast");
 
             Assert.Equal(HttpStatusCode.OK, reponse.StatusCode);
         }
