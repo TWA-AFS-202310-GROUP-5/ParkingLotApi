@@ -10,18 +10,31 @@ namespace ParkingLotApi.Controllers
     [Route("/parkinglots")]
     public class ParkingLotController : Controller
     {
-        private readonly ParkingLotService _parkingLotervice;
+        private readonly ParkingLotService _parkingLotService;
         public ParkingLotController(ParkingLotService parkingLotService)
         {
-            this._parkingLotervice = parkingLotService;
+            this._parkingLotService = parkingLotService;
         }
 
         [HttpPost]
-        public async Task<ActionResult<ParkingLot>> AddParkingLotAsync([FromBody]ParkingLotDto parkingLotDto)
+        public async Task<ActionResult<ParkingLot>> AddParkingLotAsync([FromBody] ParkingLotDto parkingLotDto)
         {
 
-              return Created(nameof(AddParkingLotAsync), await _parkingLotervice.AddAsync(parkingLotDto));
+            return Created(nameof(AddParkingLotAsync), await _parkingLotService.AddAsync(parkingLotDto));
 
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteParkingLotByIdAsync(string id)
+        {
+            await _parkingLotService.DeleteParkingLotByIdAsync(id);
+            return NoContent();
+        }
+
+        [HttpGet("{pageIndex}")]
+        public async Task<ActionResult<List<ParkingLot>>> GetParkingLotByPageAsync(int pageIndex)
+        {
+            return Ok(nameof(GetParkingLotByPageAsync), await _parkingLotService.GetParkingLotByPageAsync)
         }
     }
 }
