@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ParkingLotApi.Dtos;
 using ParkingLotApi.Exceptions;
+using ParkingLotApi.Models;
 using ParkingLotApi.Services;
 
 namespace ParkingLotApi.Controllers
@@ -16,7 +17,7 @@ namespace ParkingLotApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ParkingLotDto>> CreateParkingLotAsync([FromBody] ParkingLotDto parkingLotDto)
+        public async Task<ActionResult<ParkingLot>> CreateParkingLotAsync([FromBody] ParkingLotDto parkingLotDto)
         {
             return StatusCode(StatusCodes.Status201Created, await _parkingLotService.AddSync(parkingLotDto));
         }
@@ -25,7 +26,14 @@ namespace ParkingLotApi.Controllers
         public async Task<ActionResult> DeleteOneParkingLotAsync(string id)
         {
             await _parkingLotService.DeleteOneParkingLotAsync(id);
-            return StatusCode(StatusCodes.Status200OK);
+            return StatusCode(StatusCodes.Status204NoContent);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ParkingLot>> GetOneParkingLotById(string id)
+        {
+            var result = await _parkingLotService.GetOneParkingLotById(id);
+            return result != null ? StatusCode(StatusCodes.Status200OK, result) : StatusCode(StatusCodes.Status404NotFound);
         }
 
     }
