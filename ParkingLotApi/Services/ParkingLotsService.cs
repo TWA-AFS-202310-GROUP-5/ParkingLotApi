@@ -49,5 +49,16 @@ namespace ParkingLotApi.Services
             }
             throw new InvalidIdException();
         }
+
+        public Task<ParkingLot> UpdateParkingLotCapacity(string id, int capacity)
+        {
+            if (capacity < 10)
+            {
+                throw new InvalidCapacityException();
+            }
+            var parkingLot = GetParkingLotByIdAsync(id).Result;
+            parkingLot.Capacity = capacity;
+            return parkingLotsRepository.UpdateParkingLotAsync(id, parkingLot);
+        }
     }
 }
