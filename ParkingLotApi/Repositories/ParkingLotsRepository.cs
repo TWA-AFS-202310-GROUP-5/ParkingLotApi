@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using ParkingLotApi.Dtos;
 using ParkingLotApi.Models;
 
 namespace ParkingLotApi.Repositories
@@ -33,6 +34,13 @@ namespace ParkingLotApi.Repositories
         public async Task<List<ParkingLot>> GetParkingLots(int pageIndex)
         {
            return _parkingLotCollection.Find(_ => true).ToList().Skip((pageIndex - 1) * 15).Take(15).ToList();
+        }
+
+        public async Task<ParkingLot> UpdateParkingLotById(string id, UpdateRequest request)
+        {
+            await _parkingLotCollection.UpdateOneAsync(Builders<ParkingLot>.Filter.Eq(p => p.Id, id),
+                Builders<ParkingLot>.Update.Set(x => x.Capacity, request.Capacity));
+            return await _parkingLotCollection.Find(x => x.Id == id).FirstAsync();
         }
     }
 }

@@ -10,16 +10,16 @@ namespace ParkingLotApi.Filters
 
         void IActionFilter.OnActionExecuted(ActionExecutedContext context)
         {
-            //if (context.Exception is NoExistIdException)
-            //{
+            if (context.Exception is not null)
+            {
                 context.Result = new NotFoundResult();
                 context.ExceptionHandled = true;
-            //}
+            }
         }
 
         void IActionFilter.OnActionExecuting(ActionExecutingContext context)
         {
-            
+
         }
     }
 }

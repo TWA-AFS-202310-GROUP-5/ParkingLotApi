@@ -36,11 +36,17 @@ namespace ParkingLotApi.Services
         public async Task<ParkingLot> GetByIdAsync(string id)
         {
             ParkingLot parkingLot = await parkingLotsRepository.GetParkingLotById(id);  
-            if (parkingLot == null)
-            {
-                throw new NoExistIdException();
-            }
+            //if (parkingLot == null)
+            //{
+            //    throw new NoExistIdException();
+            //}
             return parkingLot;
+        }
+
+        public async Task<ParkingLot> UpdateByIdAsync(string id, UpdateRequest request)
+        {
+            await GetByIdAsync(id);
+            return await parkingLotsRepository.UpdateParkingLotById(id, request);
         }
     }
 }

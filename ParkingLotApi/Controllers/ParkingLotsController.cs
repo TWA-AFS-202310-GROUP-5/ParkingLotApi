@@ -40,5 +40,11 @@ namespace ParkingLotApi.Controllers
         {
             return StatusCode(StatusCodes.Status200OK, await _parkingLotsService.GetByIdAsync(id));
         }
+
+        [HttpPatch("{id}")]
+        public async Task<ActionResult<ParkingLot>> UpdateParkingLotById(string id, [FromBody] UpdateRequest request)
+        {
+            return StatusCode(StatusCodes.Status200OK, await _parkingLotsService.UpdateByIdAsync(id, request));
+        }
     }
 }
