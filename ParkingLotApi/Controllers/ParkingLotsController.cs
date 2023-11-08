@@ -15,6 +15,7 @@ namespace ParkingLotApi.Controllers
         {
             this._parkingLotsService = parkingLotsService;
         }
+
         [HttpPost]
         public async Task<ActionResult<ParkingLot>> AddParkingLotAsync([FromBody] ParkingLotDto parkingLotDto)
         {
