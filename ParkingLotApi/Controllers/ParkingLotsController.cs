@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ParkingLotApi.Dtos;
+using ParkingLotApi.Exceptions;
 using ParkingLotApi.Services;
 
 namespace ParkingLotApi.Controllers
@@ -22,7 +23,7 @@ namespace ParkingLotApi.Controllers
                 var res = await _parkingLotService.AddSync(parkingLotDto);
                 return StatusCode(StatusCodes.Status201Created, res);
             }
-            catch (ArgumentException e)
+            catch (InvalidCapacityException e)
             {
                 return BadRequest();
             }
