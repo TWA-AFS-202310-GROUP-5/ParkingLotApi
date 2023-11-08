@@ -46,8 +46,11 @@ namespace ParkingLotApiTest.Controllers
             var receivedParkingLot = await response.Content.ReadFromJsonAsync<ParkingLot>();
 
             Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+            Assert.NotNull(receivedParkingLot.Id);
             Assert.Equal(parkingLot.Name, receivedParkingLot.Name);
-            
+            Assert.Equal(parkingLot.Capacity, receivedParkingLot.Capacity);
+            Assert.Equal(parkingLot.Location, receivedParkingLot.Location);
+
         }
     }
 }

@@ -16,7 +16,13 @@ namespace ParkingLotApi.Services
             {
                 throw new ArgumentException();
             }
-            return null;
+            return new ParkingLot
+            { 
+                Name = parkingLotDto.Name,
+                Id  = Guid.NewGuid().ToString(),
+                Location = parkingLotDto.Location,
+                Capacity = parkingLotDto.Capacity,
+            };
         }
     }
 }
