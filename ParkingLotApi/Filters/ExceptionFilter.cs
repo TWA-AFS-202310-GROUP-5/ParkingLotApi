@@ -13,7 +13,7 @@ namespace ParkingLotApi.Filters
         {
             if (context.Exception is InvalidCapacityException)
             {
-                context.Result = new BadRequestResult();
+                context.Result = new BadRequestObjectResult(context.Exception.Message);
                 context.ExceptionHandled = true;
             }
             if (context.Exception is IDNotExistException)
@@ -24,7 +24,7 @@ namespace ParkingLotApi.Filters
             }
             if (context.Exception is NameAlreadyExistException)
             {
-                context.Result = new BadRequestResult();
+                context.Result = new BadRequestObjectResult(context.Exception.Message);
                 context.ExceptionHandled = true;
             }
         }
