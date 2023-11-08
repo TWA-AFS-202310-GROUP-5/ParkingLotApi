@@ -29,5 +29,10 @@ namespace ParkingLotApi.Repositories
         {
             await _parkingLotCollection.DeleteOneAsync(x => x.Id == id);
         }
+
+        public async Task<List<ParkingLot>> GetParkingLots(int pageIndex)
+        {
+           return _parkingLotCollection.Find(_ => true).ToList().Skip((pageIndex - 1) * 15).Take(15).ToList();
+        }
     }
 }
