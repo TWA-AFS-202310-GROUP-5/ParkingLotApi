@@ -20,14 +20,7 @@ namespace ParkingLotApi.Controllers
         [HttpPost(Name = "to create a new parking lot")]
         public async Task<ActionResult<ParkingLotDto>> AddParkingLot([FromBody]ParkingLotDto parkingLot)
         {
-            try
-            {
-                return StatusCode(StatusCodes.Status201Created, await _parkingLotsService.AddAsync(parkingLot));
-            }
-            catch (InvalidCapacityException ex) {
-                return BadRequest();
-            }
-            
+            return StatusCode(StatusCodes.Status201Created, await _parkingLotsService.AddAsync(parkingLot));   
         }
     }
 }
