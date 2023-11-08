@@ -21,6 +21,11 @@ namespace ParkingLotApi.Services
             {
                 throw new InvalidCapacityException();
             }
+            var allParkingLots = await _parkingLotRepository.GetAllParkingLots();
+            if (allParkingLots.Exists(x => x.Name == parkingLotDto.Name))
+            {
+                throw new NameAlreadyExistException();
+            }
             var parkingLot = new ParkingLot()
             {
                 Name = parkingLotDto.Name,
@@ -38,7 +43,7 @@ namespace ParkingLotApi.Services
             }
             else
             {
-                throw new IDNotExistException();
+                throw new IDNotExistException(id);
             }
             
         }
@@ -56,7 +61,7 @@ namespace ParkingLotApi.Services
             }
             else
             {
-                throw new IDNotExistException();
+                throw new IDNotExistException(id);
             }           
         }
 
@@ -72,7 +77,7 @@ namespace ParkingLotApi.Services
             }
             else
             {
-                throw new IDNotExistException();
+                throw new IDNotExistException(parkingLot.Id);
             }
         }
     }

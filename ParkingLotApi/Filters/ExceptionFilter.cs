@@ -18,7 +18,13 @@ namespace ParkingLotApi.Filters
             }
             if (context.Exception is IDNotExistException)
             {
-                context.Result = new NotFoundResult();
+                context.Result = new NotFoundObjectResult(context.Exception.Message);
+                context.ExceptionHandled = true;
+                
+            }
+            if (context.Exception is NameAlreadyExistException)
+            {
+                context.Result = new BadRequestResult();
                 context.ExceptionHandled = true;
             }
         }
