@@ -22,14 +22,31 @@ namespace ParkingLotApi.Repositories
             return await GetParkingLotByNameAsync(parkingLot.Name);
         }
 
-        public async Task DeleteParkingLotAsync(string id)
+        public void DeleteParkingLot(string id)
         {
-            parkingLotCollection.DeleteOne(_=>_.id == id);
+            parkingLotCollection.DeleteOne(_ => _.id == id);
         }
 
         public async Task<ParkingLot> GetParkingLotByNameAsync(string name)
         {
             return await parkingLotCollection.Find(_ => _.Name == name).FirstOrDefaultAsync();
+        }
+
+        public async Task<ParkingLot> GetParkingLotByIdAsync(string id)
+        {
+            return await parkingLotCollection.Find(_ => _.id == id).FirstOrDefaultAsync();
+        }
+
+        public List<ParkingLot> GetParkingLotWithPageSizePageIndex(int pageSize, int pageIndex)
+        {
+            var parkingLots = GetAll();
+            var returnLots = parkingLots.Skip(pageSize * (pageIndex - 1)).Take(pageSize);
+            return returnLots.ToList();
+        }
+
+        public List<ParkingLot> GetAll()
+        {
+            return parkingLotCollection.Find(_ => true).ToList();
         }
     }
 }

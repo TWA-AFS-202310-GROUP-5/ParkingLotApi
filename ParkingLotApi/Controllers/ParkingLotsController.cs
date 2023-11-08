@@ -22,10 +22,22 @@ namespace ParkingLotApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteParkingLotAsync([FromRoute] string id)
+        public ActionResult DeleteParkingLot([FromRoute] string id)
         {
-            await parkingLotsService.DeleteParkingLotAsync(id);
+            parkingLotsService.DeleteParkingLotAsync(id);
             return StatusCode(StatusCodes.Status204NoContent);
+        }
+
+        [HttpGet]
+        public ActionResult<List<ParkingLot>> GetParkingLot([FromQuery] int pageIndex = 1)
+        {
+            return Ok(parkingLotsService.GetParkingLotWithPageIndex(pageIndex));
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<List<ParkingLot>>> GetParkingLotByIdAsync([FromRoute] string id)
+        {
+            return Ok(await parkingLotsService.GetParkingLotByIdAsync(id));
         }
     }
 }

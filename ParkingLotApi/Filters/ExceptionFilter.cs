@@ -4,15 +4,23 @@ using ParkingLotApi.Exceptions;
 
 namespace ParkingLotApi.Filters
 {
-    public class ParkingLotAlreadyExistExceptionFilter : IActionFilter, IOrderedFilter
+    public class ExceptionFilter : IActionFilter
     {
-        public int Order => 2;
-
         public void OnActionExecuted(ActionExecutedContext context)
         {
             if(context.Exception is InvalidCapacityException)
             {
                 context.Result = new BadRequestResult();
+                context.ExceptionHandled = true;
+            }
+            else if (context.Exception is ParkingLotAlreadyExistException)
+            {
+                context.Result = new BadRequestResult();
+                context.ExceptionHandled = true;
+            }
+            else if (context.Exception is InvalidIdException)
+            {
+                context.Result = new NotFoundResult();
                 context.ExceptionHandled = true;
             }
         }
