@@ -39,5 +39,10 @@ namespace ParkingLotApi.Services
         {
             return  _paringLotRepository.GetOnePageParkingLots(pageIndex);
         }
+
+        public async Task<ActionResult<ParkingLot>> UpdateOne(UpdateParkingLotDto updateParkingLotDto)
+        {
+            return await _paringLotRepository.UpdateOne(updateParkingLotDto);
+        }
     }
 }

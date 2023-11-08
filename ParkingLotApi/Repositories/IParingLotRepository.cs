@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ParkingLotApi.Dtos;
 using ParkingLotApi.Models;
 
 namespace ParkingLotApi.Repositories
@@ -9,5 +10,6 @@ namespace ParkingLotApi.Repositories
         Task DeleteOneParkingLotAsync(string id);
         Task<ParkingLot> GetOneParkingLotById(string id);
         List<ParkingLot> GetOnePageParkingLots(int pageIndex);
+        Task<ActionResult<ParkingLot>> UpdateOne(UpdateParkingLotDto updateParkingLotDto);
     }
 }

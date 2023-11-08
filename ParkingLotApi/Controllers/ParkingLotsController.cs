@@ -36,10 +36,22 @@ namespace ParkingLotApi.Controllers
             return result != null ? StatusCode(StatusCodes.Status200OK, result) : StatusCode(StatusCodes.Status404NotFound);
         }
 
-        [HttpGet("pages/{id}")]
+        [HttpGet("pages/{pageIndex}")]
         public  ActionResult<List<ParkingLot>> GetOnePageParkingLots(int pageIndex)
         {
             return _parkingLotService.GetOnePageParkingLots(pageIndex);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<ParkingLot>> UpdateOne(UpdateParkingLotDto updateParkingLotDto)
+        {
+            var result = await _parkingLotService.GetOneParkingLotById(updateParkingLotDto.Id);
+            if (result == null)
+            {
+               return StatusCode(StatusCodes.Status404NotFound);
+            }
+
+            return await _parkingLotService.UpdateOne(updateParkingLotDto);
         }
 
     }

@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using ParkingLotApi.Dtos;
 using ParkingLotApi.Models;
+using static MongoDB.Driver.WriteConcern;
 
 namespace ParkingLotApi.Repositories
 {
@@ -35,6 +37,16 @@ namespace ParkingLotApi.Repositories
         {
             return _parkingLotsCollection.Find(_ => true).ToList().Skip((pageIndex - 1) * 15).Take(15).ToList();
 
+        }
+
+        public async Task<ActionResult<ParkingLot>> UpdateOne(UpdateParkingLotDto updateParkingLotDto)
+        {
+            var filter = Builders<ParkingLot>.Filter
+                .Eq(p => p.Id, updateParkingLotDto.Id);
+            var update = Builders<ParkingLot>.Update
+                .Set(p => p.Capacity, updateParkingLotDto.Capacity);
+            _parkingLotsCollection.UpdateOneAsync(filter, update);
+            return _parkingLotsCollection.Find(p => p.Id == updateParkingLotDto.Id).FirstOrDefault();
         }
     }
 }
