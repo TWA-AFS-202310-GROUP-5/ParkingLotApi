@@ -10,18 +10,18 @@ using Xunit.Sdk;
 
 namespace ParkingLotApiTest.Controllers
 {
-    public class WeatherForcastControllerTest
+    public class WeatherForcastControllerTest:TestBase
     {
         private HttpClient _httpClient;
-        public WeatherForcastControllerTest()
-        {
-            WebApplicationFactory<Program> webApplicationFactory = new WebApplicationFactory<Program>();
-            _httpClient = webApplicationFactory.CreateClient(); 
+
+        public WeatherForcastControllerTest(WebApplicationFactory<Program> factory) : base(factory)
+        { 
         }
         [Fact]
         public async Task Should_return_correctly_when_get_weather_forecast()
         {
             // given & when
+            HttpClient _httpClient = GetClient(); 
             HttpResponseMessage response = await _httpClient.GetAsync("/weatherForecast");
             // then
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
