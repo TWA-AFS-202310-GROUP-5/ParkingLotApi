@@ -44,6 +44,11 @@ namespace ParkingLotApi.Services
             }
         }
 
+        public async Task<List<ParkingLot?>> GetPage(int pageIndex)
+        {
+            return await parkingLotsRepository.GetPage(pageIndex);
+        }
+
         public async Task DeleteById(string id)
         {
             if (!ObjectId.TryParse(id, out _))
