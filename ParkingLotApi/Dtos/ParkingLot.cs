@@ -1,8 +1,9 @@
 ﻿namespace ParkingLotApi.Dtos
 {
-    public class ParkingLotDto
+    public class ParkingLot
     {
-        public required string Name { get; set; }
+        public required string id { get; set; }
+        public string? Name { get; set; }
         public int Capacity { get; set; }
         public string? Location { get; set; }
     }
