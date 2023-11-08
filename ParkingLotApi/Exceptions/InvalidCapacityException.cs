@@ -4,7 +4,7 @@ namespace ParkingLotApi.Exceptions
 {
     public class InvalidCapacityException : Exception
     {
-        public InvalidCapacityException() : base("Capacity can not be less than 10.")
+        public InvalidCapacityException() : base("Parking Lot Capacity can not be less than 10.")
         {
         }
 

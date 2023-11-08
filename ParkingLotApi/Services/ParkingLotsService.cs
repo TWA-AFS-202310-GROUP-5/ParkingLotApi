@@ -17,7 +17,11 @@ namespace ParkingLotApi.Services
         {
             if (parkingLot.Capacity < 10)
             {
-                throw new InvalidCapacityException("Parking Lot Capacity cant be less than 10");
+                throw new InvalidCapacityException();
+            }
+            if (parkingLotsRepository.GetParkingLotByName(parkingLot.Name) is not null)
+            {
+                throw new ParkingLotAlreadyExistException();
             }
             return await parkingLotsRepository.CreateParkingLot(parkingLot.ToParkingLot());
         }
