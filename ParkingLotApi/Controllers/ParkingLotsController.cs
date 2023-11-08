@@ -19,5 +19,14 @@ namespace ParkingLotApi.Controllers
         {
             return StatusCode(StatusCodes.Status201Created, await _parkingLotsService.AddAsync(parkingLotDto));
         }
+
+        [HttpDelete("{id}")]
+        public async Task<NoContentResult> RemoveParkingLotById(string id)
+        {
+            await _parkingLotsService.DeleteByIdAsync(id);
+            return NoContent();
+        }
+
+
     }
 }
