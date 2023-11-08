@@ -8,10 +8,7 @@ namespace ParkingLotApi.Controllers
     [Route("/parkinglots")]
     public class ParkingLotController : Controller
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        
         [HttpPost]
         public async Task<ActionResult<ParkingLot>> AddParkingLotAsync([FromBody]ParkingLotDto parkingLotDto)
         {
