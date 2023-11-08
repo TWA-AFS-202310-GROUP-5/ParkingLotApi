@@ -1,4 +1,7 @@
+using Microsoft.Extensions.DependencyInjection;
 using ParkingLotApi.Filters;
+using ParkingLotApi.Models;
+using ParkingLotApi.Repositories;
 using ParkingLotApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +13,8 @@ builder.Services.AddControllers(options => options.Filters.Add<InvalidCapacityEx
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ParkingLotService>();
+builder.Services.AddSingleton<IParingLotRepository, ParingLotRepository>();
+builder.Services.Configure<ParkingLotDatabaseSetting>(builder.Configuration.GetSection("ConnectionStrings"));
 
 var app = builder.Build();
 
