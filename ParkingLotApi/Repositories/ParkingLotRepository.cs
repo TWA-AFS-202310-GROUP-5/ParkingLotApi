@@ -26,19 +26,25 @@ namespace ParkingLotApi.Repositories
             await _parkingLotCollection.DeleteOneAsync(x => x.Id == id);
         }
 
-        public Task<List<ParkingLot>> GetParkingLotsInRange(int pageIndex)
+        public async Task<List<ParkingLot>> GetParkingLotsInRange(int pageIndex)
         {
-            throw new NotImplementedException();
+            var allParkingLots = await GetAllParkingLots();
+            return allParkingLots.Skip((pageIndex - 1) * 15).Take(15).ToList();
         }
 
-        public Task<ParkingLot> GetParkingLotById(string id)
+        public async Task<ParkingLot> GetParkingLotById(string id)
         {
-            throw new NotImplementedException();
+            return await _parkingLotCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
         }
 
-        public Task<ParkingLot> UpdateParkingLotById(string id)
+        public async Task<ParkingLot> UpdateParkingLotById(ParkingLot parkingLot)
         {
-            throw new NotImplementedException();
+            var update = Builders<ParkingLot>.Update.Set(e => e.Name, parkingLot.Name);
+            return await _parkingLotCollection.FindOneAndUpdateAsync(a => a.Id == parkingLot.Id, update);
+        }
+        public async Task<List<ParkingLot>> GetAllParkingLots()
+        {
+            return await _parkingLotCollection.Find(x => x.Id != null).ToListAsync();
         }
     }
 }

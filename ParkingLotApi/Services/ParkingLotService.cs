@@ -1,15 +1,18 @@
 ﻿using ParkingLotApi.Dtos;
 using ParkingLotApi.Exceptions;
 using ParkingLotApi.Models;
+using ParkingLotApi.Repositories;
 
 namespace ParkingLotApi.Services
 {
     public class ParkingLotService
     {
-        public ParkingLotService()
+        public ParkingLotService(IParkingLotRepository repository)
         {
-
+            this._parkingLotRepository = repository;
         }
+
+        private readonly IParkingLotRepository _parkingLotRepository;
 
         public async Task<ParkingLot> AddAsync(ParkingLotDto parkingLotDto)
         {
@@ -17,13 +20,31 @@ namespace ParkingLotApi.Services
             {
                 throw new InvalidCapacityException();
             }
-            return new ParkingLot
-            { 
+            var parkingLot = new ParkingLot()
+            {
                 Name = parkingLotDto.Name,
-                Id  = Guid.NewGuid().ToString(),
                 Location = parkingLotDto.Location,
                 Capacity = parkingLotDto.Capacity,
             };
+            return await _parkingLotRepository.CreateParkingLot(parkingLot);
+        }
+
+        public async Task DeleteParkingLotByIdAsync(string id)
+        {
+            if (await _parkingLotRepository.GetParkingLotById(id) != null)
+            {
+                await _parkingLotRepository.DeleteParkingLotById(id);
+            }
+            else
+            {
+                throw new IDNotExistException();
+            }
+            
+        }
+
+        public async Task<List<ParkingLot>> GetParkingLotByPageAsync(int pageIndex)
+        {
+            return await _parkingLotRepository.GetParkingLotsInRange(pageIndex);
         }
     }
 }
