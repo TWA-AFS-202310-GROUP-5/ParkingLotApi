@@ -38,5 +38,10 @@ namespace ParkingLotApi.Controllers
             return StatusCode(StatusCodes.Status204NoContent);
         }
 
+        [HttpPut("{id}")]
+        public async Task<ActionResult<ParkingLot>> UpdateCapacity(string id, CapacityRequest capacity)
+        {
+            return StatusCode(StatusCodes.Status200OK, await _parkingLotsService.UpdateCapacity(id, capacity));
+        }
     }
 }
