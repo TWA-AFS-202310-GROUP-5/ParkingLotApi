@@ -19,11 +19,16 @@ namespace ParkingLotApi.Services
             {
                 throw new InvalidCapacityException();
             }
-            if (parkingLotsRepository.GetParkingLotByName(parkingLot.Name) is not null)
+            if (parkingLotsRepository.GetParkingLotByNameAsync(parkingLot.Name).Result is not null)
             {
                 throw new ParkingLotAlreadyExistException();
             }
-            return await parkingLotsRepository.CreateParkingLot(parkingLot.ToParkingLot());
+            return await parkingLotsRepository.CreateParkingLotAsync(parkingLot.ToParkingLot());
+        }
+
+        public async Task DeleteParkingLotAsync(string id)
+        {
+            await parkingLotsRepository.DeleteParkingLotAsync(id);
         }
     }
 }

@@ -16,13 +16,18 @@ namespace ParkingLotApi.Repositories
             parkingLotCollection = mongoDatabase.GetCollection<ParkingLot>(parkingLotDatabaseSettings.CollectionName);
         }
 
-        public async Task<ParkingLot> CreateParkingLot(ParkingLot parkingLot)
+        public async Task<ParkingLot> CreateParkingLotAsync(ParkingLot parkingLot)
         {
             await parkingLotCollection.InsertOneAsync(parkingLot);
-            return await GetParkingLotByName(parkingLot.Name);
+            return await GetParkingLotByNameAsync(parkingLot.Name);
         }
 
-        public async Task<ParkingLot> GetParkingLotByName(string name)
+        public async Task DeleteParkingLotAsync(string id)
+        {
+            parkingLotCollection.DeleteOne(_=>_.id == id);
+        }
+
+        public async Task<ParkingLot> GetParkingLotByNameAsync(string name)
         {
             return await parkingLotCollection.Find(_ => _.Name == name).FirstOrDefaultAsync();
         }

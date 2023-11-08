@@ -4,7 +4,8 @@ namespace ParkingLotApi.Repositories
 {
     public interface IParkingLotsRepository
     {
-        public Task<ParkingLot> CreateParkingLot(ParkingLot parkingLot);
-        public Task<ParkingLot> GetParkingLotByName(string name);
+        public Task<ParkingLot> CreateParkingLotAsync(ParkingLot parkingLot);
+        public Task<ParkingLot> GetParkingLotByNameAsync(string name);
+        public Task DeleteParkingLotAsync(string id);
     }
 }

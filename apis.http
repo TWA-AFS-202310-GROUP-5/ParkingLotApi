@@ -43,6 +43,13 @@ Content-Type: application/json; charset=utf-8
 
 ######################################################################################
 
+## AC2 Delete ParkingLot
+GET https://{{hostname}}:{{port}}/api/parkinglots/{parkinglotId}
+
+### Response: status code NO CONTENT( 204 )
+
+######################################################################################
+
 ## AC2 Get All ParkingLots
 GET https://{{hostname}}:{{port}}/api/parkinglots
 
