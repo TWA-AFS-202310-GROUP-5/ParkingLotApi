@@ -42,12 +42,8 @@ namespace ParkingLotApi.Repositories
         public async Task<ParkingLot> UpdateParkingLotCapacity(ParkingLot parkingLot)
         {
             var update = Builders<ParkingLot>.Update.Set(e => e.Capacity, parkingLot.Capacity);
-            var options = new FindOneAndUpdateOptions<ParkingLot>()
-            {
-                IsUpsert = false,
-                ReturnDocument = ReturnDocument.After
-            };
-            return await _parkingLotCollection.FindOneAndUpdateAsync(a => a.Id == parkingLot.Id, update);
+            await _parkingLotCollection.FindOneAndUpdateAsync(a => a.Id == parkingLot.Id, update);
+            return await GetParkingLotById(parkingLot.Id);
         }
         public async Task<List<ParkingLot>> GetAllParkingLots()
         {
