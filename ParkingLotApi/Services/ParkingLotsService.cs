@@ -44,7 +44,24 @@ namespace ParkingLotApi.Services
             }
         }
 
-        
+        public async Task DeleteById(string id)
+        {
+            if (!ObjectId.TryParse(id, out _))
+            {
+                throw new InvalidObjectIdException();
+            }
+            var result = await parkingLotsRepository.GetById(id);
+            if (result == null)
+            {
+                throw new NotFoundException();
+            }
+            else
+            {
+                await parkingLotsRepository.DeleteById(id);
+            }
+        }
+
+
 
     }
 }
