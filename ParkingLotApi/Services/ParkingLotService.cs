@@ -46,5 +46,15 @@ namespace ParkingLotApi.Services
         {
             return await _parkingLotRepository.GetParkingLotsInRange(pageIndex);
         }
+
+        public async Task<ParkingLot> GetParkingLotByIdAsync(string id)
+        {
+            return await _parkingLotRepository.GetParkingLotById(id);
+        }
+
+        internal Task<object?> UpdateParkingLot(ParkingLot parkingLot)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

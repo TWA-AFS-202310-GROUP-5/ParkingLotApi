@@ -36,5 +36,11 @@ namespace ParkingLotApi.Controllers
         {
             return Ok(await _parkingLotService.GetParkingLotByPageAsync(pageIndex));
         }
+
+        [HttpPut]
+        public async Task<ActionResult<ParkingLot>> UpdateParkingLotAsync(ParkingLot parkingLot)
+        {
+            return Ok(await _parkingLotService.UpdateParkingLot(parkingLot));
+        }
     }
 }
