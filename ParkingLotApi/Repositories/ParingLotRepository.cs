@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using ParkingLotApi.Models;
 
@@ -18,6 +19,11 @@ namespace ParkingLotApi.Repositories
         {
             await _parkingLotsCollection.InsertOneAsync(parkingLot);
             return await _parkingLotsCollection.Find(p => p.Name == parkingLot.Name).FirstAsync();
+        }
+
+        public async Task DeleteOneParkingLotAsync(string id)
+        {
+            _parkingLotsCollection.DeleteOneAsync(p => p.Id == id);
         }
     }
 }

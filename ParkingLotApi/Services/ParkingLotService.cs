@@ -1,4 +1,5 @@
-﻿using ParkingLotApi.Dtos;
+﻿using Microsoft.AspNetCore.Mvc;
+using ParkingLotApi.Dtos;
 using ParkingLotApi.Exceptions;
 using ParkingLotApi.Models;
 using ParkingLotApi.Repositories;
@@ -22,6 +23,11 @@ namespace ParkingLotApi.Services
             }
 
             return await _paringLotRepository.CreateParkingLotAsync(parkingLotDto.ToEntity());
+        }
+
+        public async Task DeleteOneParkingLotAsync(string id)
+        {
+            await _paringLotRepository.DeleteOneParkingLotAsync(id);
         }
     }
 }
