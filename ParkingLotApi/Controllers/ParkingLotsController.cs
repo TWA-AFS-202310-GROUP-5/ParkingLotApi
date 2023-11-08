@@ -36,5 +36,11 @@ namespace ParkingLotApi.Controllers
             return result != null ? StatusCode(StatusCodes.Status200OK, result) : StatusCode(StatusCodes.Status404NotFound);
         }
 
+        [HttpGet("pages/{id}")]
+        public  ActionResult<List<ParkingLot>> GetOnePageParkingLots(int pageIndex)
+        {
+            return _parkingLotService.GetOnePageParkingLots(pageIndex);
+        }
+
     }
 }

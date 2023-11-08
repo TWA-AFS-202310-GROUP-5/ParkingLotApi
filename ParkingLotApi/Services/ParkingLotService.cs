@@ -34,5 +34,10 @@ namespace ParkingLotApi.Services
         {
             return await _paringLotRepository.GetOneParkingLotById(id);
         }
+
+        public List<ParkingLot> GetOnePageParkingLots(int pageIndex)
+        {
+            return  _paringLotRepository.GetOnePageParkingLots(pageIndex);
+        }
     }
 }
