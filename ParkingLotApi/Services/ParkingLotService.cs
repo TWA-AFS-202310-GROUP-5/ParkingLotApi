@@ -1,4 +1,5 @@
 ﻿using ParkingLotApi.Dtos;
+using ParkingLotApi.Exceptions;
 using ParkingLotApi.Models;
 
 namespace ParkingLotApi.Services
@@ -14,7 +15,7 @@ namespace ParkingLotApi.Services
         {
             if (parkingLotDto.Capacity < 10)
             {
-                throw new ArgumentException();
+                throw new InvalidCapacityException();
             }
             return new ParkingLot
             { 

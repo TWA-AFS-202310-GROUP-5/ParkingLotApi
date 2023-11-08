@@ -19,15 +19,9 @@ namespace ParkingLotApi.Controllers
         [HttpPost]
         public async Task<ActionResult<ParkingLot>> AddParkingLotAsync([FromBody]ParkingLotDto parkingLotDto)
         {
-            try
-            {
-                return Created(nameof(AddParkingLotAsync), await _parkingLotervice.AddAsync(parkingLotDto));
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest();
-            }
-            
+
+              return Created(nameof(AddParkingLotAsync), await _parkingLotervice.AddAsync(parkingLotDto));
+
         }
     }
 }
