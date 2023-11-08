@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Testing;
+using ParkingLotApi.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,8 +22,17 @@ namespace ParkingLotApiTest.Controllers
         {
             HttpClient client = GetClient();
             var reponse = await client.GetAsync("/WeatherForecast");
-            //add amend
             Assert.Equal(HttpStatusCode.OK, reponse.StatusCode);
+        }
+
+        [Fact]
+        public async Task Should_return_400_when_create_parking_lot_given_capacity_less_than_10()
+        {
+            HttpClient client = GetClient();
+            ParkingLotDto invalidCapcityParkingLot = new ParkingLotDto("Parking lot1", 9, "Chuangxin Building");
+
+            var response = await client.PostAsJsonAsync("/parkinglots", invalidCapcityParkingLot);
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
     }
 }
