@@ -37,9 +37,9 @@ namespace ParkingLotApi.Controllers
         }
 
         [HttpGet("pages/{pageIndex}")]
-        public  ActionResult<List<ParkingLot>> GetOnePageParkingLots(int pageIndex)
+        public  async Task<ActionResult<List<ParkingLot>>> GetOnePageParkingLotsAsync(int pageIndex)
         {
-            return _parkingLotService.GetOnePageParkingLots(pageIndex);
+            return await _parkingLotService.GetOnePageParkingLotsAsync(pageIndex);
         }
 
         [HttpPut]

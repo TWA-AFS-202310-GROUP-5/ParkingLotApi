@@ -35,9 +35,9 @@ namespace ParkingLotApi.Services
             return await _paringLotRepository.GetOneParkingLotByIdAsync(id);
         }
 
-        public List<ParkingLot> GetOnePageParkingLots(int pageIndex)
+        public async Task<List<ParkingLot>> GetOnePageParkingLotsAsync(int pageIndex)
         {
-            return  _paringLotRepository.GetOnePageParkingLots(pageIndex);
+            return  await _paringLotRepository.GetOnePageParkingLotsAsync(pageIndex);
         }
 
         public async Task<ActionResult<ParkingLot>> UpdateOneAsync(UpdateParkingLotDto updateParkingLotDto)
