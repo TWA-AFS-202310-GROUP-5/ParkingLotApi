@@ -1,11 +1,20 @@
+using Microsoft.Extensions.DependencyInjection;
+using ParkingLotApi.Filters;
+using ParkingLotApi.Models;
+using ParkingLotApi.Repositories;
+using ParkingLotApi.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options => options.Filters.Add<InvalidCapacityExceptionFilter>());
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<ParkingLotService>();
+builder.Services.AddSingleton<IParingLotRepository, ParingLotRepository>();
+builder.Services.Configure<ParkingLotDatabaseSetting>(builder.Configuration.GetSection("ConnectionStrings"));
 
 var app = builder.Build();
 
@@ -23,3 +32,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program {}
