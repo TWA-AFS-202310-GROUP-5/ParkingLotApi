@@ -46,6 +46,11 @@ namespace ParkingLotApi.Services
 
         public async Task<List<ParkingLot?>> GetPage(int pageIndex)
         {
+            if (pageIndex < 1)
+            {
+                throw new InvalidPageIndexException();
+            }
+
             return await parkingLotsRepository.GetPage(pageIndex);
         }
 

@@ -4,16 +4,15 @@ using ParkingLotApi.Exceptions;
 
 namespace ParkingLotApi.Filters
 {
-    public class NotFoundExceptionFilter : IActionFilter, IOrderedFilter
+    public class DuplicatedNameExceptionFilter : IActionFilter, IOrderedFilter
     {
-        int IOrderedFilter.Order => int.MaxValue - 8;
+        int IOrderedFilter.Order => int.MaxValue - 10;
 
         void IActionFilter.OnActionExecuted(ActionExecutedContext context)
         {
-            if (context.Exception is NotFoundException notFoundException
-                || context.Exception is InvalidPageIndexException invalidPageIndexException)
+            if (context.Exception is DuplicatedNameException duplicatedNameException)
             {
-                context.Result = new NotFoundResult();
+                context.Result = new BadRequestResult();
                 context.ExceptionHandled = true;
             }
         }

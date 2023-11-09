@@ -12,7 +12,8 @@ namespace ParkingLotApi.Filters
         {
             if(context.Exception is InvalidObjectIdException inValidObjectIdException)
             {
-                context.Result = new BadRequestResult();
+                //context.Result = new NotFoundResult();
+                context.Result = new NotFoundObjectResult(context.Exception.Message);
                 context.ExceptionHandled = true;
             }
         }

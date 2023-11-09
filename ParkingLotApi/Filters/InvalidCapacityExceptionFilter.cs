@@ -15,6 +15,7 @@ namespace ParkingLotApi.Filters
                 context.Result = new BadRequestResult();
                 context.ExceptionHandled = true;
             }
+
         }
 
         void IActionFilter.OnActionExecuting(ActionExecutingContext context)

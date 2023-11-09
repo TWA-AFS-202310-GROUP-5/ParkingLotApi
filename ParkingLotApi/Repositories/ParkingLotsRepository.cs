@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 using ParkingLotApi.Models;
 
 namespace ParkingLotApi.Repositories
@@ -32,13 +33,8 @@ namespace ParkingLotApi.Repositories
         {
             int pageSize = 15;
             int skipCount = (pageIndex - 1) * pageSize;
-            var filter = Builders<ParkingLot>.Filter.Empty;
-            var options = new FindOptions<ParkingLot>
-            {
-                Limit = pageSize,
-                Skip = skipCount
-            };
-            return await _parkingLotCollection.Find(filter).SortBy(a=>a.Id).Skip(skipCount).Limit(pageSize).ToListAsync();
+            
+            return await _parkingLotCollection.AsQueryable().Skip(skipCount).Take(pageSize).ToListAsync();
         }
 
         public async Task DeleteById(string id)
