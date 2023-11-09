@@ -35,7 +35,7 @@ namespace ParkingLotApi.Services
         public async Task<List<ParkingLot>> GetParkingLotWithPageIndexAsync(int pageIndex)
         {
             int pageSize = 15;
-            return await parkingLotsRepository.GetParkingLotWithPageSizePageIndex(pageSize, pageIndex);
+            return pageIndex > 0 ? await parkingLotsRepository.GetParkingLotWithPageSizePageIndex(pageSize, pageIndex) : new List<ParkingLot>();
         }
 
         public async Task<ParkingLot> GetParkingLotByIdAsync(string id)
