@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using ParkingLotApi.Models;
+using MongoDB.Driver.Linq;
 
 namespace ParkingLotApi.Repositories
 {
@@ -39,12 +40,12 @@ namespace ParkingLotApi.Repositories
 
         public async Task<List<ParkingLot>> GetParkingLotWithPageSizePageIndex(int pageSize, int pageIndex)
         {
-            return await parkingLotCollection.Find(_ => true).Skip((pageIndex - 1) * pageSize).Limit(pageSize).ToListAsync();
+            return await parkingLotCollection.AsQueryable().Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
         }
 
-        public List<ParkingLot> GetAll()
+        public async Task<List<ParkingLot>> GetAllAsync()
         {
-            return parkingLotCollection.Find(_ => true).ToList();
+            return await parkingLotCollection.AsQueryable().ToListAsync();
         }
 
         public async Task<ParkingLot> UpdateParkingLotAsync(string id, ParkingLot parkingLot)

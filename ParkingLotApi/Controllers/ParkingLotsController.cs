@@ -41,9 +41,9 @@ namespace ParkingLotApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<List<ParkingLot>>> UpdateParkingLotCapacity([FromRoute] string id, [FromBody] CapacityDto capacityDto)
+        public async Task<ActionResult<List<ParkingLot>>> UpdateParkingLotCapacity([FromRoute] string id, [FromBody] ParkingLotRequest parkingLotRequest)
         {
-            return Ok(await parkingLotsService.UpdateParkingLotCapacity(id, capacityDto.Capacity));
+            return Ok(await parkingLotsService.UpdateParkingLotCapacity(id, parkingLotRequest.Capacity));
         }
     }
 }

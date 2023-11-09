@@ -8,19 +8,14 @@ namespace ParkingLotApi.Filters
     {
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            if(context.Exception is InvalidCapacityException)
+            if(context.Exception is InvalidCapacityException || context.Exception is ParkingLotAlreadyExistException)
             {
-                context.Result = new BadRequestResult();
-                context.ExceptionHandled = true;
-            }
-            else if (context.Exception is ParkingLotAlreadyExistException)
-            {
-                context.Result = new BadRequestResult();
+                context.Result = new BadRequestObjectResult(context.Exception.Message);
                 context.ExceptionHandled = true;
             }
             else if (context.Exception is InvalidIdException)
             {
-                context.Result = new NotFoundResult();
+                context.Result = new NotFoundObjectResult(context.Exception.Message);
                 context.ExceptionHandled = true;
             }
         }

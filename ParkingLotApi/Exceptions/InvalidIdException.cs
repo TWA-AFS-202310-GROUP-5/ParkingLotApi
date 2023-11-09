@@ -4,7 +4,7 @@ namespace ParkingLotApi.Exceptions
 {
     public class InvalidIdException : Exception
     {
-        public InvalidIdException() : base("Invalid Id.")
+        public InvalidIdException() : base("Id provided is not valid.")
         {
         }
 
