@@ -40,10 +40,10 @@ namespace ParkingLotApi.Repositories
             return await _parkingLotCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task<ParkingLot> UpdateParkingLotCapacity(ParkingLot parkingLot)
+        public async Task<ParkingLot> UpdateParkingLotCapacity(string id, int capacity)
         {
-            var filter = Builders<ParkingLot>.Filter.Where(x => x.Id == parkingLot.Id);
-            var update = Builders<ParkingLot>.Update.Set(e => e.Capacity, parkingLot.Capacity);
+            var filter = Builders<ParkingLot>.Filter.Where(x => x.Id == id);
+            var update = Builders<ParkingLot>.Update.Set(e => e.Capacity, capacity);
             var options = new FindOneAndUpdateOptions<ParkingLot, ParkingLot>
             {
                 IsUpsert = false,

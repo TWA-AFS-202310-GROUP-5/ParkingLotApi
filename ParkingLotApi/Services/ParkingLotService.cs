@@ -1,4 +1,5 @@
-﻿using ParkingLotApi.Dtos;
+﻿using MongoDB.Bson;
+using ParkingLotApi.Dtos;
 using ParkingLotApi.Exceptions;
 using ParkingLotApi.Models;
 using ParkingLotApi.Repositories;
@@ -10,7 +11,7 @@ namespace ParkingLotApi.Services
         private static int MIN_CAPACITY = 10;
         public ParkingLotService(IParkingLotRepository repository)
         {
-            this._parkingLotRepository = repository;
+            _parkingLotRepository = repository;
         }
 
         private readonly IParkingLotRepository _parkingLotRepository;
@@ -37,48 +38,56 @@ namespace ParkingLotApi.Services
 
         public async Task DeleteParkingLotByIdAsync(string id)
         {
-            if (await _parkingLotRepository.GetParkingLotById(id) != null)
+            if (ObjectId.TryParse(id, out _))
             {
-                await _parkingLotRepository.DeleteParkingLotById(id);
+                if (await _parkingLotRepository.GetParkingLotById(id) != null)
+                {
+                    await _parkingLotRepository.DeleteParkingLotById(id);
+                }
             }
-            else
-            {
-                throw new IDNotExistException(id);
-            }
+
+            throw new IDNotExistException(id);
+            
             
         }
 
         public async Task<List<ParkingLot>> GetParkingLotByPageAsync(int pageIndex)
         {
+            if(pageIndex < 1)
+            {
+                throw new PageIndexException();
+            }
             return await _parkingLotRepository.GetParkingLotsInRange(pageIndex);
         }
 
         public async Task<ParkingLot> GetParkingLotByIdAsync(string id)
         {
-            if (await _parkingLotRepository.GetParkingLotById(id) != null)
+            if (ObjectId.TryParse(id, out _))
             {
-                return await _parkingLotRepository.GetParkingLotById(id);
+                if (await _parkingLotRepository.GetParkingLotById(id) != null)
+                {
+                    return await _parkingLotRepository.GetParkingLotById(id);
+                }
             }
-            else
-            {
-                throw new IDNotExistException(id);
-            }           
+            throw new IDNotExistException(id);
+                      
         }
 
-        public async Task<ParkingLot> UpdateParkingLotCapacity(ParkingLot parkingLot)
+        public async Task<ParkingLot> UpdateParkingLotCapacity(string id, int capacity)
         {
-            if(parkingLot.Capacity < MIN_CAPACITY)
+            if(capacity < MIN_CAPACITY)
             {
                 throw new InvalidCapacityException();
             }
-            if (await _parkingLotRepository.GetParkingLotById(parkingLot.Id) != null)
+            if (ObjectId.TryParse(id, out _))
             {
-                return await _parkingLotRepository.UpdateParkingLotCapacity(parkingLot);
+                if (await _parkingLotRepository.GetParkingLotById(id) != null)
+                {
+                    return await _parkingLotRepository.UpdateParkingLotCapacity(id, capacity);
+                }
             }
-            else
-            {
-                throw new IDNotExistException(parkingLot.Id);
-            }
+            throw new IDNotExistException(id);
+            
         }
     }
 }

@@ -27,6 +27,11 @@ namespace ParkingLotApi.Filters
                 context.Result = new BadRequestObjectResult(context.Exception.Message);
                 context.ExceptionHandled = true;
             }
+            if (context.Exception is PageIndexException)
+            {
+                context.Result = new BadRequestObjectResult(context.Exception.Message);
+                context.ExceptionHandled = true;
+            }
         }
 
         public void OnActionExecuting(ActionExecutingContext context)
