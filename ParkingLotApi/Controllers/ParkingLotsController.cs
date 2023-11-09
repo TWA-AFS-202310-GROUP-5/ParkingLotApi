@@ -30,9 +30,9 @@ namespace ParkingLotApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ParkingLot>> GetOneParkingLotById(string id)
+        public async Task<ActionResult<ParkingLot>> GetOneParkingLotByIdAsync(string id)
         {
-            var result = await _parkingLotService.GetOneParkingLotById(id);
+            var result = await _parkingLotService.GetOneParkingLotByIdAsync(id);
             return result != null ? StatusCode(StatusCodes.Status200OK, result) : StatusCode(StatusCodes.Status404NotFound);
         }
 
@@ -43,16 +43,15 @@ namespace ParkingLotApi.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<ParkingLot>> UpdateOne(UpdateParkingLotDto updateParkingLotDto)
+        public async Task<ActionResult<ParkingLot>> UpdateOneAsync(UpdateParkingLotDto updateParkingLotDto)
         {
-            var result = await _parkingLotService.GetOneParkingLotById(updateParkingLotDto.Id);
+            var result = await _parkingLotService.GetOneParkingLotByIdAsync(updateParkingLotDto.Id);
             if (result == null)
             {
                return StatusCode(StatusCodes.Status404NotFound);
             }
 
-            return await _parkingLotService.UpdateOne(updateParkingLotDto);
+            return await _parkingLotService.UpdateOneAsync(updateParkingLotDto);
         }
-
     }
 }

@@ -8,8 +8,8 @@ namespace ParkingLotApi.Repositories
     {
         Task<ParkingLot> CreateParkingLotAsync(ParkingLot parkingLot);
         Task DeleteOneParkingLotAsync(string id);
-        Task<ParkingLot> GetOneParkingLotById(string id);
+        Task<ParkingLot> GetOneParkingLotByIdAsync(string id);
         List<ParkingLot> GetOnePageParkingLots(int pageIndex);
-        Task<ActionResult<ParkingLot>> UpdateOne(UpdateParkingLotDto updateParkingLotDto);
+        Task<ActionResult<ParkingLot>> UpdateOneAsync(UpdateParkingLotDto updateParkingLotDto);
     }
 }

@@ -28,7 +28,7 @@ namespace ParkingLotApi.Repositories
             _parkingLotsCollection.DeleteOneAsync(p => p.Id == id);
         }
 
-        public async Task<ParkingLot> GetOneParkingLotById(string id)
+        public async Task<ParkingLot> GetOneParkingLotByIdAsync(string id)
         {
             return await _parkingLotsCollection.Find(p => p.Id == id).FirstOrDefaultAsync();
         }
@@ -39,7 +39,7 @@ namespace ParkingLotApi.Repositories
 
         }
 
-        public async Task<ActionResult<ParkingLot>> UpdateOne(UpdateParkingLotDto updateParkingLotDto)
+        public async Task<ActionResult<ParkingLot>> UpdateOneAsync(UpdateParkingLotDto updateParkingLotDto)
         {
             var filter = Builders<ParkingLot>.Filter
                 .Eq(p => p.Id, updateParkingLotDto.Id);

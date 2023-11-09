@@ -30,9 +30,9 @@ namespace ParkingLotApi.Services
             await _paringLotRepository.DeleteOneParkingLotAsync(id);
         }
 
-        public async Task<ParkingLot> GetOneParkingLotById(string id)
+        public async Task<ParkingLot> GetOneParkingLotByIdAsync(string id)
         {
-            return await _paringLotRepository.GetOneParkingLotById(id);
+            return await _paringLotRepository.GetOneParkingLotByIdAsync(id);
         }
 
         public List<ParkingLot> GetOnePageParkingLots(int pageIndex)
@@ -40,9 +40,9 @@ namespace ParkingLotApi.Services
             return  _paringLotRepository.GetOnePageParkingLots(pageIndex);
         }
 
-        public async Task<ActionResult<ParkingLot>> UpdateOne(UpdateParkingLotDto updateParkingLotDto)
+        public async Task<ActionResult<ParkingLot>> UpdateOneAsync(UpdateParkingLotDto updateParkingLotDto)
         {
-            return await _paringLotRepository.UpdateOne(updateParkingLotDto);
+            return await _paringLotRepository.UpdateOneAsync(updateParkingLotDto);
         }
     }
 }
