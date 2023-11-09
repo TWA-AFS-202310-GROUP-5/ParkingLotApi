@@ -2,6 +2,6 @@
 {
     public class NameAlreadyExistException : Exception
     {
-        public NameAlreadyExistException(): base("Parking lot aame already exist") { }
+        public NameAlreadyExistException(): base("Parking lot name already exist") { }
     }
 }

@@ -29,10 +29,9 @@ namespace ParkingLotApi.Repositories
             await _parkingLotCollection.DeleteOneAsync(x => x.Id == id);
         }
 
-        public async Task<List<ParkingLot>> GetParkingLotsInRange(int pageIndex)
+        public async Task<List<ParkingLot>> GetParkingLotsInRange(int pageIndex, int pageSize)
         {
-            var allParkingLots = await GetAllParkingLots();
-            return allParkingLots.Skip((pageIndex - 1) * 15).Take(15).ToList();
+            return _parkingLotCollection.AsQueryable().Skip((pageIndex - 1) * 15).Take(15).ToList();
         }
 
         public async Task<ParkingLot> GetParkingLotById(string id)
@@ -54,6 +53,11 @@ namespace ParkingLotApi.Repositories
         public async Task<List<ParkingLot>> GetAllParkingLots()
         {
             return await _parkingLotCollection.Find(_ => true).ToListAsync();
+        }
+
+        public async Task<List<ParkingLot>> GetParkingLotsByNameAsync(string name)
+        {
+            return await _parkingLotCollection.Find(_ => _.Name == name).ToListAsync();
         }
     }
 }

@@ -9,6 +9,7 @@ namespace ParkingLotApi.Services
     public class ParkingLotService
     {
         private static int MIN_CAPACITY = 10;
+        private static int PAGE_SIZE = 15;
         public ParkingLotService(IParkingLotRepository repository)
         {
             _parkingLotRepository = repository;
@@ -22,8 +23,8 @@ namespace ParkingLotApi.Services
             {
                 throw new InvalidCapacityException();
             }
-            var allParkingLots = await _parkingLotRepository.GetAllParkingLots();
-            if (allParkingLots.Exists(x => x.Name == parkingLotDto.Name))
+            var existParkingLot = await _parkingLotRepository.GetParkingLotsByNameAsync(parkingLotDto.Name);
+            if (existParkingLot.Count > 0)
             {
                 throw new NameAlreadyExistException();
             }
@@ -57,7 +58,7 @@ namespace ParkingLotApi.Services
             {
                 throw new PageIndexException();
             }
-            return await _parkingLotRepository.GetParkingLotsInRange(pageIndex);
+            return await _parkingLotRepository.GetParkingLotsInRange(pageIndex, PAGE_SIZE);
         }
 
         public async Task<ParkingLot> GetParkingLotByIdAsync(string id)
