@@ -29,9 +29,9 @@ namespace ParkingLotApi.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<ParkingLot>> GetParkingLot([FromQuery] int pageIndex = 1)
+        public async Task<ActionResult<List<ParkingLot>>> GetParkingLotAsync([FromQuery] int pageIndex = 1)
         {
-            return Ok(parkingLotsService.GetParkingLotWithPageIndex(pageIndex));
+            return Ok(await parkingLotsService.GetParkingLotWithPageIndexAsync(pageIndex));
         }
 
         [HttpGet("{id}")]

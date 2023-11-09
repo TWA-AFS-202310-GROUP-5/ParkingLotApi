@@ -32,16 +32,17 @@ namespace ParkingLotApi.Services
             parkingLotsRepository.DeleteParkingLot(id);
         }
 
-        public List<ParkingLot> GetParkingLotWithPageIndex(int pageIndex)
+        public async Task<List<ParkingLot>> GetParkingLotWithPageIndexAsync(int pageIndex)
         {
-            return parkingLotsRepository.GetParkingLotWithPageSizePageIndex(15, pageIndex);
+            int pageSize = 15;
+            return await parkingLotsRepository.GetParkingLotWithPageSizePageIndex(pageSize, pageIndex);
         }
 
-        public Task<ParkingLot> GetParkingLotByIdAsync(string id)
+        public async Task<ParkingLot> GetParkingLotByIdAsync(string id)
         {
-            if (ObjectId.TryParse(id, out _))
+            if (isValidId(id))
             {
-                var parkingLot = parkingLotsRepository.GetParkingLotByIdAsync(id);
+                var parkingLot = await parkingLotsRepository.GetParkingLotByIdAsync(id);
                 if (parkingLot is not null)
                 {
                     return parkingLot;
@@ -50,15 +51,27 @@ namespace ParkingLotApi.Services
             throw new InvalidIdException();
         }
 
-        public Task<ParkingLot> UpdateParkingLotCapacity(string id, int capacity)
+        public async Task<ParkingLot> UpdateParkingLotCapacity(string id, int capacity)
         {
             if (capacity < 10)
             {
                 throw new InvalidCapacityException();
             }
-            var parkingLot = GetParkingLotByIdAsync(id).Result;
-            parkingLot.Capacity = capacity;
-            return parkingLotsRepository.UpdateParkingLotAsync(id, parkingLot);
+            if (isValidId(id))
+            {
+                var parkingLot = await parkingLotsRepository.GetParkingLotByIdAsync(id);
+                if (parkingLot is not null)
+                {
+                    parkingLot.Capacity = capacity;
+                    return await parkingLotsRepository.UpdateParkingLotAsync(id, parkingLot);
+                }
+            }
+            throw new InvalidIdException();
+        }
+
+        private bool isValidId(string id)
+        {
+            return ObjectId.TryParse(id, out _);
         }
     }
 }
