@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 using ParkingLotApi.Dtos;
 using ParkingLotApi.Models;
 using System.Diagnostics.Metrics;
@@ -31,7 +32,7 @@ namespace ParkingLotApi.Repositories
 
         public async Task<List<ParkingLot>> GetParkingLotsInRange(int pageIndex, int pageSize)
         {
-            return _parkingLotCollection.AsQueryable().Skip((pageIndex - 1) * 15).Take(15).ToList();
+            return await _parkingLotCollection.AsQueryable().Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
         }
 
         public async Task<ParkingLot> GetParkingLotById(string id)

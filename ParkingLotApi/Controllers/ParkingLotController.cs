@@ -13,7 +13,7 @@ namespace ParkingLotApi.Controllers
         private readonly ParkingLotService _parkingLotService;
         public ParkingLotController(ParkingLotService parkingLotService)
         {
-            this._parkingLotService = parkingLotService;
+            _parkingLotService = parkingLotService;
         }
 
         [HttpPost]

@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 
 namespace ParkingLotApiTest.Controllers
 {
-    public class WeatherForecastControllerTest: TestBase
+    public class ParkingLotControllerTest: TestBase
     {
-        public WeatherForecastControllerTest(WebApplicationFactory<Program> factory) : base(factory)
+        public ParkingLotControllerTest(WebApplicationFactory<Program> factory) : base(factory)
         { 
         }
 
