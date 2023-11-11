@@ -1,0 +1,22 @@
+# For more info on HTTP files go to https://aka.ms/vs/httpfile
+################################################################
+### AC1: create parkinglot
+POST https://{{hostname}}:{{port}}/api/parkinglots
+Request Body: 
+{
+    "name": "New Parking Lot",
+    "capacity": 15,
+    "location": "Chuangxin Building"
+}
+Response Code: 
+case 1: 201 CREATED, return new parking lot
+case 2: 400 BAD REQUEST, "parking lot name already exist"/"capacity out of range"
+case 3: 400 BAD REQUEST, other error
+Response Body:
+{
+     "id": "abc"
+    "name": "New Parking Lot",
+    "capacity": 15,
+    "location": "Chuangxin Building"
+}
+################################################################
