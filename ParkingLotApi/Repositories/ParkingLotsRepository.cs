@@ -2,6 +2,7 @@
 using MongoDB.Driver;
 using ParkingLotApi.Dtos;
 using ParkingLotApi.Models;
+using MongoDB.Driver.Linq;
 
 namespace ParkingLotApi.Repositories
 {
@@ -26,6 +27,11 @@ namespace ParkingLotApi.Repositories
             return await _parkingLotCollection.Find(x => x.Id == id).FirstAsync();
         }
 
+        public async Task<ParkingLot> GetParkingLotByName(string name)
+        {
+            return await _parkingLotCollection.Find(x => x.Name == name).FirstAsync();
+        }
+
         public async Task DeleteById(string id)
         {
             await _parkingLotCollection.DeleteOneAsync(x => x.Id == id);
@@ -33,7 +39,8 @@ namespace ParkingLotApi.Repositories
 
         public async Task<List<ParkingLot>> GetParkingLots(int pageIndex)
         {
-           return _parkingLotCollection.Find(_ => true).ToList().Skip((pageIndex - 1) * 15).Take(15).ToList();
+            return await _parkingLotCollection.AsQueryable().
+                Skip((pageIndex - 1) * 15).Take(15).ToListAsync();
         }
 
         public async Task<ParkingLot> UpdateParkingLotById(string id, UpdateRequest request)

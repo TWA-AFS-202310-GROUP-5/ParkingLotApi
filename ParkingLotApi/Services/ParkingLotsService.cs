@@ -20,6 +20,10 @@ namespace ParkingLotApi.Services
             {
                 throw new InvalidCapacityException();
             }
+            if (parkingLotsRepository.GetParkingLotByName(parkingLotDto.Name) == null)
+            {
+                throw new InValidNameException();
+            }
             return await parkingLotsRepository.CreateParkingLot(parkingLotDto.ToEntity());
         }
 
