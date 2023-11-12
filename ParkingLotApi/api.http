@@ -1,0 +1,23 @@
+Create ParkingLot
+URL:
+Post  /parkinglots
+CreateParkingLot
+
+Request Body:
+{
+    "name": string,
+    "capacity": string,
+    "location": string
+}
+
+Response Code:
+201 created  with created parkinglot
+400 bad requset : already existed parkinglot name; capacity number less 10
+
+Response Body:
+{
+    "id": string,
+    "name": string,
+    "capacity": string,
+    "location": string
+}
